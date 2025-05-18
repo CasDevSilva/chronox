@@ -36,8 +36,9 @@ export function syncDatabase() {
         projects: {
             id          : "INTEGER PRIMARY KEY AUTOINCREMENT",
             name        : "VARCHAR(50) NOT NULL",
+            alias       : "VARCHAR(20) NOT NULL UNIQUE",
             status      : "CHAR(1) NOT NULL",
-            date_created: "DATE NOT NULL DEFAULT CURRENT_TIMESTAMP",
+            date_created: "DATE NOT NULL",
             date_end    : "DATE"
         },
         sessions: {
