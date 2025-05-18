@@ -12,7 +12,8 @@
   "dependencies": {
     "better-sqlite3": "^11.10.0",
     "cli-table3": "^0.6.5",
-    "dayjs": "^1.11.13"
+    "dayjs": "^1.11.13",
+    "exceljs": "^4.4.0"
   },
   "bin": {
     "chronox": "./bin/chronox.js"
