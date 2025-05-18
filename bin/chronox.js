@@ -4,6 +4,8 @@ import * as Start from "../src/commands/start.js";
 import * as Stop from "../src/commands/stop.js";
 import * as Project from "../utils/projects.js";
 import * as Sessions from "../utils/sessions.js";
+import * as Report from "../src/commands/report.js";
+import * as Export from "../src/commands/export.js";
 
 let mArrProcess = process.argv.splice(2)
 
@@ -11,9 +13,11 @@ let mObjProcess = {
     "init"    : Init.init,
     "start"   : Start.start,
     "stop"    : Stop.stop,
-    "list"    : Project.listProjects,
     "add"     : Project.addProject,
-    "sessions": Sessions.viewSessions
+    "list"    : Project.listProjects,
+    "sessions": Sessions.viewSessions,
+    "report"  : Report.reportProjects,
+    "export"  : Export.exportCsv
 };
 
 if (Object.keys(mObjProcess).includes(mArrProcess[0])) {
