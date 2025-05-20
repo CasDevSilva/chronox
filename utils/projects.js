@@ -68,7 +68,7 @@ export function listProjects() {
 
                 console.log(mRsTable.toString());
             } else {
-                console.log("No tasks found");
+                console.log("No projects found");
             }
 
             db.close();
