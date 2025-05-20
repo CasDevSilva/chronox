@@ -6,6 +6,7 @@ import * as Project from "../utils/projects.js";
 import * as Sessions from "../utils/sessions.js";
 import * as Report from "../src/commands/report.js";
 import * as Export from "../src/commands/export.js";
+import * as Rate from "../src/commands/rate.js";
 
 let mArrProcess = process.argv.splice(2)
 
@@ -17,7 +18,8 @@ let mObjProcess = {
     "list"    : Project.listProjects,
     "sessions": Sessions.viewSessions,
     "report"  : Report.reportProjects,
-    "export"  : Export.exportCsv
+    "export"  : Export.exportCsv,
+    "set-rate": Rate.rateProject
 };
 
 if (Object.keys(mObjProcess).includes(mArrProcess[0])) {
