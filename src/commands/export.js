@@ -47,9 +47,11 @@ export async function exportCsv() {
             if(Array.isArray(mRsSessions)){mSessionsSheet.addRows(mRsSessions)}
 
             let mStrFullPath = path.join(baseUrl, `report_chronox_${dayjs().format("DD_MM_YYYY(HH_mm_ss)")}.xlsx`)
+            let mStrMidPath = path.join("~", ".chronox", "exports",`report_chronox_${dayjs().format("DD_MM_YYYY(HH_mm_ss)")}.xlsx`)
+
             await workbook.xlsx.writeFile(mStrFullPath);
 
-            console.log(`File Created in: "${mStrFullPath}"`)
+            console.log(`File Created in: "${mStrMidPath}"`)
         } else {
             if ([...arguments].length == 1) {
                 let mObjProject = db.prepare(`SELECT * FROM projects WHERE alias = ?`).get(...arguments[0])
@@ -65,9 +67,11 @@ export async function exportCsv() {
                 if (Array.isArray(mRsSessions)) {mSessionsSheet.addRows(mRsSessions)}
 
                 let mStrFullPath = path.join(baseUrl, `report_chronox_${mObjProject.alias}_${dayjs().format("DD_MM_YYYY(HH_mm_ss)")}.xlsx`)
+                let mStrMidPath = path.join("~", ".chronox", "exports",`report_chronox_${mObjProject.alias}_${dayjs().format("DD_MM_YYYY(HH_mm_ss)")}.xlsx`);
+
                 await workbook.xlsx.writeFile(mStrFullPath);
 
-                console.log(`File Created in: "${mStrFullPath}"`)
+                console.log(`File Created in: "${mStrMidPath}"`)
             } else {
                 console.log("Error only requests the total of a project, not more.");
             }
