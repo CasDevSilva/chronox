@@ -15,6 +15,7 @@ export function reportProjects() {
                 SELECT
                     projects.alias,
                     projects.name,
+                    projects.rate,
                     MIN(sessions.date_start) date_start,
                     MAX(sessions.date_end) date_end,
                     SUM(sessions.duration) duration
@@ -30,6 +31,7 @@ export function reportProjects() {
                     SELECT
                         projects.alias,
                         projects.name,
+                        projects.rate,
                         MIN(sessions.date_start) date_start,
                         MAX(sessions.date_end) date_end,
                         SUM(sessions.duration) duration
@@ -48,8 +50,8 @@ export function reportProjects() {
 
         if (Array.isArray(mArrTtlSessions)) {
             let mRsTable = new Table({
-                head: ["Alias", "Name of Project", "Date Start", "Date End", "Duration"],
-                colWidths: [30, 50, 30, 30, 30],
+                head: ["Alias", "Name of Project", "Rate", "Date Start", "Date End", "Duration", "Cost"],
+                colWidths: [30, 50, 30, 30, 30, 30, 30],
                 style: {
                     head: ["cyan"],
                     border: ["grey"]
@@ -60,9 +62,11 @@ export function reportProjects() {
                 mRsTable.push([
                     mRowSession.alias,
                     mRowSession.name,
+                    mRowSession.rate,
                     mRowSession.date_start,
                     mRowSession.date_end,
-                    mRowSession.duration
+                    mRowSession.duration,
+                    (mRowSession.duration/3600 * mRowSession.rate).toFixed(2)
                     ]
                 )
             })
