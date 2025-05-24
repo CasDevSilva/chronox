@@ -1,14 +1,33 @@
 import * as Database from "../../utils/database.js";
 import * as Session from "../../utils/sessions.js";
 import dayjs from "dayjs";
+import chalk from "chalk";
 
-export function stop() {
+/**
+ * Name: stop
+ *
+ * Description: This function is used to stop the current session of a project.
+ */
+export function stop(pArrParams) {
+    if(pArrParams.length > 0) {
+        console.log(chalk.red("This command does not accept parameters"));
+        return;
+    }
+
+    /**
+     * Get the current session of a project
+     * And set the date_end to update the session
+    */
     let mObjUpdSession = {
         date_end: dayjs().format('YYYY-MM-DD HH:mm:ss')
     };
 
     let mObjSession = Session.getCurrentSession();
 
+    /**
+     * If receive a session, update the session
+     * Else, show a message
+    */
     if (mObjSession) {
         mObjUpdSession.id = mObjSession.id;
 
@@ -31,11 +50,11 @@ export function stop() {
 
             db.close();
 
-            console.log(`Pause project "${mObjSession.name}" session`);
+            console.log(chalk.green(`Pause project "${mObjSession.name}" session`));
         } catch (err) {
-            console.log("Error pausing current session")
+            console.log(chalk.red("Error pausing current session"))
         }
     } else {
-        console.log("No active sessions")
+        console.log(chalk.yellow("No active sessions"))
     }
 }
