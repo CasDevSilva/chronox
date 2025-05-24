@@ -14,7 +14,11 @@ const Database = pkg;
  * Return: It returns the database connection.
 */
 export function connectDatabase(){
-    let db = new Database("./db/chronox.db");
+    const __dirname = path.dirname(fileURLToPath(import.meta.url));
+    const dbFolder = path.join(__dirname, '..', 'db');
+    const dbFile = path.join(dbFolder, 'chronox.db');
+
+    let db = new Database(dbFile);
     return db;
 }
 
