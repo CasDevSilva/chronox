@@ -63,7 +63,7 @@ export function reportProjects(pArrParams) {
          * Validate if the query returned a result
          * If not, show a message
         */
-        if (Array.isArray(mArrTtlSessions)) {
+        if (Array.isArray(mArrTtlSessions) && mArrTtlSessions.length > 0) {
             let mRsTable = new Table({
                 head: ["Alias", "Name of Project", "Rate", "Date Start", "Date End", "Duration", "Cost"],
                 colWidths: [20, 40, 20, 30, 30, 20, 20],
@@ -88,7 +88,7 @@ export function reportProjects(pArrParams) {
 
             console.log(mRsTable.toString());
         } else {
-            console.log(chalk.red("Error when generating the time average"));
+            console.log(chalk.yellow("No records found to create the report"));
         }
 
         db.close();
