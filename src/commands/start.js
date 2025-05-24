@@ -1,38 +1,73 @@
 import * as Database from "../../utils/database.js";
-import * as Projects from "../../utils/projects.js";
 import dayjs from "dayjs";
+import chalk from "chalk";
 
+/**
+ * Name: start
+ *
+ * Description: This function starts a session for a project.
+ *
+ * @param {Array} pArrProject - The alias of the project to start a session for.
+*/
 export function start (pArrProject) {
-    if (pArrProject.length > 1 || pArrProject.length < 1) {
-        console.log("Error, only specify the alias of your project")
+    /**
+     * Check if the user provided a project alias
+     * If have more than one project alias, show error
+     * Else validate actions
+    */
+    if (pArrProject.length < 1) {
+        console.log(chalk.red("Error, specify the alias of your project"))
+    } else if (pArrProject.length > 1) {
+        console.log(chalk.red("Error, only specify the alias of your project"))
     } else {
         let mStrAliasProject = pArrProject[0];
 
-        if (Projects.verifyExistProject([mStrAliasProject])){
-            try {
-                const db = Database.connectDatabase();
+        /**
+         * Validate if the project exists and is open, else show error
+         * Validate if the project has a session running. If have one show error.
+         * Else validate if exists anothe session open then show an error, else create a new session
+        */
+        try {
+            const db = Database.connectDatabase();
 
-                let mObjProject = db.prepare(`SELECT * FROM projects WHERE alias = ?`).get(mStrAliasProject);
-                let mObjSession = {
-                    project_id: mObjProject.id,
-                    date_start: dayjs().format('YYYY-MM-DD HH:mm:ss')
-                };
+            let mObjProject = db.prepare(`SELECT * FROM projects WHERE alias = ? AND status = 'O'`).get(mStrAliasProject);
 
-                let mStrStatement = db.prepare(`
-                    INSERT INTO sessions(project_id, date_start)
-                    VALUES (:project_id, :date_start)
-                `);
+            if (mObjProject) {
+                let mObjActiveSession = db.prepare(`SELECT * FROM sessions WHERE project_id = ? AND date_end IS NULL`).get(mObjProject.id);
+                if (mObjActiveSession) {
+                    console.log(chalk.yellow("Error, the project is already have a session running"));
+                    return;
+                } else {
+                    let mObjActiveSessions = db.prepare(`SELECT * FROM sessions WHERE date_end IS NULL`).get();
 
-                mStrStatement.run(mObjSession);
+                    if (mObjActiveSessions) {
+                        console.log(chalk.yellow("Error, you already have a session running"));
+                        return;
+                    } else {
+                        let mObjSession = {
+                            project_id: mObjProject.id,
+                            date_start: dayjs().format('YYYY-MM-DD HH:mm:ss')
+                        };
 
-                db.close();
+                        let mStrStatement = db.prepare(`
+                            INSERT INTO sessions(project_id, date_start)
+                            VALUES (:project_id, :date_start)
+                        `);
 
-                console.log(`Logging into the project "${mObjProject.name}"`);
-            } catch(err) {
-                console.log("Error logging into the project")
+                        mStrStatement.run(mObjSession);
+                    }
+
+                }
+            } else {
+                console.log(chalk.red("Error, the provided alias does not refer open project"))
+                return;
             }
-        } else {
-            console.log("Error, the provided alias does not refer to existing projects.")
+
+            db.close();
+
+            console.log(chalk.green(`Logging into the project "${mObjProject.name}"`));
+        } catch(err) {
+            console.log(chalk.red("Error logging into the project"))
         }
     }
 }
