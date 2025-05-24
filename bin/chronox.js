@@ -12,11 +12,12 @@ let mArrProcess = process.argv.splice(2)
 
 let mObjProcess = {
     "init"    : Init.init,
-    "start"   : Start.start,
-    "stop"    : Stop.stop,
     "add"     : Project.addProject,
+    "close"   : Project.closeProject,
     "list"    : Project.listProjects,
+    "start"   : Start.start,
     "sessions": Sessions.viewSessions,
+    "stop"    : Stop.stop,
     "report"  : Report.reportProjects,
     "export"  : Export.exportCsv,
     "set-rate": Rate.rateProject
