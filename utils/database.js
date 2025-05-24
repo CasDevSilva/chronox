@@ -1,5 +1,8 @@
 import pkg from "better-sqlite3";
 import chalk from "chalk";
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 const Database = pkg;
 
@@ -51,6 +54,13 @@ function createTable(pStrTableName, pObjTableColumns) {
  * Description: This function is used to synchronize the database.
 */
 export function syncDatabase() {
+    const __dirname = path.dirname(fileURLToPath(import.meta.url));
+    const dbFolder = path.join(__dirname, '..', 'db');
+
+    if (!fs.existsSync(dbFolder)) {
+        fs.mkdirSync(dbFolder, { recursive: true });
+    }
+
     let mObjTables = {
         projects: {
             id          : "INTEGER PRIMARY KEY AUTOINCREMENT",
