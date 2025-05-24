@@ -4,7 +4,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["cli", "time-tracker", "developer-tools", "productivity"],
+  "keywords": [
+    "cli",
+    "time-tracker",
+    "developer-tools",
+    "productivity"
+  ],
   "author": "Carlos Rimachi Silva",
   "license": "MIT",
   "description": "Time tracking CLI for developers",
@@ -17,6 +22,6 @@
     "exceljs": "^4.4.0"
   },
   "bin": {
-    "chronox": "./bin/chronox.js"
+    "chronox": "bin/chronox.js"
   }
 }
