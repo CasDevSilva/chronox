@@ -4,10 +4,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "keywords": ["cli", "time-tracker", "developer-tools", "productivity"],
+  "author": "Carlos Rimachi Silva",
+  "license": "MIT",
+  "description": "Time tracking CLI for developers",
   "type": "module",
   "dependencies": {
     "better-sqlite3": "^11.10.0",
