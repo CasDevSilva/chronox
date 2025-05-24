@@ -59,7 +59,7 @@ export function listProjects(pArrParams) {
     let mRsTable = new Table(
         {
             head: ["Alias code", "Name of Project", "Status", "Date created", "Date end"],
-            colWidths: [30, 50, 30, 30, 30],
+            colWidths: [20, 40, 10, 20, 20],
             compact: true,
             style: {
                 head: ["cyan"],
